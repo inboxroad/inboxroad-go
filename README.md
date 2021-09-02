@@ -1,40 +1,135 @@
-```go 
-// Create the options for the http client 
-httpClientOptions := inboxroad.NewHttpClientOptions().SetApiKey("api-key-here")
+# Inboxroad Library for Go
 
-// Create the http client with the above options
-httpClient := inboxroad.NewHttpClient(httpClientOptions)
+## Getting Started
+You will need an [inboxroad account](https://www.inboxroad.com) to get started.  
+Once you get an account, you will need to [get your api key](https://www.inboxroad.com/)
+to use it in the API calls.
 
-// Optional, needed if you will be using ir.Messages().Send()
+## Installation
+
+`go get https://github.com/inboxroad/inboxroad-go`
+
+## Usage
+
+```code
+package main 
+
+// Import the package
+import (
+    "fmt"
+	"github.com/inboxroad/inboxroad-go"
+	"os"
+)
+
+// Create the http client, we will need it later:
+httpOptions := inboxroad.NewHTTPClientOptions().SetAPIKey(os.Getenv("INBOXROAD_API_KEY"))
+httpClient := inboxroad.NewHTTPClient(httpOptions)
+
+// Send email, method 1: 
+
+// Create the message object
+message := inboxroad.NewMessage().
+    SetFromEmail(os.Getenv("INBOXROAD_SEND_EMAIL_FROM_EMAIL")).
+    SetFromName("Inboxroad Go Client - Test Suite").
+    SetToEmail(os.Getenv("INBOXROAD_SEND_EMAIL_TO_EMAIL")).
+    SetToName("Inboxroad Tester").
+    SetReplyToEmail(os.Getenv("INBOXROAD_SEND_EMAIL_FROM_EMAIL")).
+    SetSubject("Inboxroad test").
+    SetText("This is a test sent via the Inboxroad Go Client").
+    SetHTML("<b>This is a test sent via the Inboxroad Go Client</b>").
+    SetHeaders(
+        inboxroad.NewMessageHeaderCollection().
+            Add(inboxroad.NewMessageHeader("X-Test3", "Test 3")).
+            Add(inboxroad.NewMessageHeader("X-Test4", "Test 4")),
+    ).
+    SetAttachments(
+        inboxroad.NewMessageAttachmentCollection().
+            Add(inboxroad.NewMessageAttachment("test-3.txt", "Test 3", "text/plain")).
+            Add(inboxroad.NewMessageAttachment("test-4.txt", "Test 4", "text/plain")),
+    )
+
+// Create the endpoint connection
+messages := inboxroad.NewMessagesAPI(httpClient)
+
+// Send the message
+response, err := messages.Send(message)
+
+// Error?
+if err != nil {
+    panic(err)
+}
+
+// Get the status and the message id
+fmt.Println(response.GetIsSuccess(), response.GetMessageID())
+
+// ==
+
+// Send email, method 2: 
+
+// Create the message 
+message := inboxroad.NewMessageFromArray(map[string]interface{}{
+    "fromEmail":    os.Getenv("INBOXROAD_SEND_EMAIL_FROM_EMAIL"),
+    "fromName":     "Inboxroad Go Client - Test Suite",
+    "toEmail":      os.Getenv("INBOXROAD_SEND_EMAIL_TO_EMAIL"),
+    "toName":       "Inboxroad Tester",
+    "replyToEmail": os.Getenv("INBOXROAD_SEND_EMAIL_FROM_EMAIL"),
+    "subject":      "Inboxroad test",
+    "text":         "This is a test sent via the Inboxroad Go Client",
+    "html":         "<b>This is a test sent via the Inboxroad Go Client</b>",
+    "headers": []map[string]string{
+        {
+            "key":   "X-Test1",
+            "value": "Test 1",
+        },
+        {
+            "key":   "X-Test2",
+            "value": "Test 2",
+        },
+    },
+    "attachments": []map[string]string{
+        {
+            "name":     "test-1.txt",
+            "content":  "Test 1",
+            "mimeType": "text/plain",
+        },
+        {
+            "name":     "test-2.txt",
+            "content":  "Test 2",
+            "mimeType": "text/plain",
+        },
+    },
+})
+
+// Create the object instance
 ir := inboxroad.NewInboxroad(httpClient)
 
-// Build the message like: 
-messageFromBuilder := NewMessage().
-    setFromName("").
-    setToName("...").
-    setToEmail("...")
+// Send the message
+response, err := ir.NewMessagesAPI().Send(message)
 
-// OR like:     
-messageFromMap := map[string]interface{}{
-    "fromName": "...",
-    "toName": "...",
-    "toEmail": "...",
-}
-
-response, err := ir.Messages().Send(messageFromBuilder); 
-// OR: 
-// response, err := ir.Messages().Send(messageFromMap);
-// OR: 
-// response, err := NewMessagesApi(httpClient).Send(messageFromBuilder)
-// OR: 
-// response, err := NewMessagesApi(httpClient).Send(messageFromMap)
-
+// Error?
 if err != nil {
-   fmt.Println(err)
+    panic(err)
 }
 
-if response.GetIsSuccess() {
-    fmt.Println(response.GetMessageId())
-}
-
+// Get the status and the message id
+fmt.Println(response.GetIsSuccess(), response.GetMessageID())
 ```
+
+## License
+MIT
+
+## Test
+Following environment variable must be set in order to test the actual sending process:  
+`INBOXROAD_API_KEY` - The API key for accessing the API  
+`INBOXROAD_SEND_EMAIL_ENABLED` - Whether the tests should send emails (1 | 0)  
+`INBOXROAD_SEND_EMAIL_FROM_EMAIL` - The email address from where the emails come from  
+`INBOXROAD_SEND_EMAIL_TO_EMAIL` - The email address where emails will go  
+Without these, the tests will run but no email will ever be sent.
+
+Run the tests with:
+```bash
+$ go test ./...
+``` 
+
+## Bug Reports
+Report [here](https://github.com/inboxroad/inboxroad-go/issues).
