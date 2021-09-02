@@ -11,7 +11,8 @@ to use it in the API calls.
 
 ## Usage
 
-```code
+#### Send email, method 1:
+```go
 package main 
 
 // Import the package
@@ -20,12 +21,6 @@ import (
     "github.com/inboxroad/inboxroad-go"
     "os"
 )
-
-// Create the http client, we will need it later:
-httpOptions := inboxroad.NewHTTPClientOptions().SetAPIKey(os.Getenv("INBOXROAD_API_KEY"))
-httpClient := inboxroad.NewHTTPClient(httpOptions)
-
-// Send email, method 1: 
 
 // Create the message object
 message := inboxroad.NewMessage().
@@ -48,6 +43,10 @@ message := inboxroad.NewMessage().
             Add(inboxroad.NewMessageAttachment("test-4.txt", "Test 4", "text/plain")),
     )
 
+// Create the http client:
+httpOptions := inboxroad.NewHTTPClientOptions().SetAPIKey(os.Getenv("INBOXROAD_API_KEY"))
+httpClient := inboxroad.NewHTTPClient(httpOptions)
+
 // Create the endpoint connection
 messages := inboxroad.NewMessagesAPI(httpClient)
 
@@ -61,10 +60,18 @@ if err != nil {
 
 // Get the status and the message id
 fmt.Println(response.GetIsSuccess(), response.GetMessageID())
+```
 
-// ==
+#### Send email, method 2:
+```go
+package main 
 
-// Send email, method 2: 
+// Import the package
+import (
+    "fmt"
+    "github.com/inboxroad/inboxroad-go"
+    "os"
+)
 
 // Create the message 
 message := inboxroad.NewMessageFromMap(inboxroad.StringAnyMap{
@@ -99,6 +106,10 @@ message := inboxroad.NewMessageFromMap(inboxroad.StringAnyMap{
         },
     },
 })
+
+// Create the http client:
+httpOptions := inboxroad.NewHTTPClientOptions().SetAPIKey(os.Getenv("INBOXROAD_API_KEY"))
+httpClient := inboxroad.NewHTTPClient(httpOptions)
 
 // Create the object instance
 ir := inboxroad.NewInboxroad(httpClient)
