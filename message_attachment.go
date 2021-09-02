@@ -10,8 +10,8 @@ type MessageAttachmentInterface interface {
 	SetMimeType(mimeType string) MessageAttachmentInterface
 	GetMimeType() string
 	GetContentAsBase64() string
-	ToMap() map[string]string
-	ToInboxroadMap() map[string]string
+	ToMap() StringMap
+	ToInboxroadMap() StringMap
 }
 
 type MessageAttachment struct {
@@ -56,16 +56,16 @@ func (m MessageAttachment) GetMimeType() string {
 	return m.mimeType
 }
 
-func (m MessageAttachment) ToMap() map[string]string {
-	return map[string]string{
+func (m MessageAttachment) ToMap() StringMap {
+	return StringMap{
 		"name":     m.GetName(),
 		"content":  m.GetContent(),
 		"mimeType": m.GetMimeType(),
 	}
 }
 
-func (m MessageAttachment) ToInboxroadMap() map[string]string {
-	return map[string]string{
+func (m MessageAttachment) ToInboxroadMap() StringMap {
+	return StringMap{
 		"filename":  m.GetName(),
 		"file_data": m.GetContentAsBase64(),
 		"mime_type": m.GetMimeType(),

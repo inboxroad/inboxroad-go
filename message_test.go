@@ -153,7 +153,7 @@ func TestMessage_ToMap(t *testing.T) { //nolint:paralleltest
 		)
 
 	data := message.ToMap()
-	result := map[string]interface{}{
+	result := inboxroad.StringAnyMap{
 		"fromEmail":    "from@example.com",
 		"fromName":     "Sender",
 		"toEmail":      "to@example.com",
@@ -162,11 +162,11 @@ func TestMessage_ToMap(t *testing.T) { //nolint:paralleltest
 		"subject":      "Subject",
 		"text":         "Text",
 		"html":         "<b>Html</b>",
-		"headers": []map[string]string{
+		"headers": inboxroad.SliceStringMap{
 			{"key": "X-Test1", "value": "Test 1"},
 			{"key": "X-Test2", "value": "Test 2"},
 		},
-		"attachments": []map[string]string{
+		"attachments": inboxroad.SliceStringMap{
 			{"name": "file-1.txt", "content": "Test 1", "mimeType": "text/plain"},
 			{"name": "file-2.txt", "content": "Test 2", "mimeType": "text/plain"},
 		},
@@ -198,7 +198,7 @@ func TestMessage_ToInboxroadMap(t *testing.T) { //nolint:paralleltest
 
 	data := message.ToInboxroadMap()
 
-	result := map[string]interface{}{
+	result := inboxroad.StringAnyMap{
 		"from_email":     "from@example.com",
 		"from_name":      "Sender",
 		"to_email":       "to@example.com",
@@ -207,13 +207,13 @@ func TestMessage_ToInboxroadMap(t *testing.T) { //nolint:paralleltest
 		"subject":        "Subject",
 		"text":           "Text",
 		"html":           "<b>Html</b>",
-		"headers": map[string]string{
+		"headers": inboxroad.StringMap{
 			"X-Test1": "Test 1",
 			"X-Test2": "Test 2",
 		},
-		"attachments": []map[string]string{
-			{"filename": "file-1.txt", "file_data": "VGVzdCAx", "mime_type": "text/plain"},
-			{"filename": "file-2.txt", "file_data": "VGVzdCAy", "mime_type": "text/plain"},
+		"attachments": inboxroad.SliceStringMap{
+			inboxroad.StringMap{"filename": "file-1.txt", "file_data": "VGVzdCAx", "mime_type": "text/plain"},
+			inboxroad.StringMap{"filename": "file-2.txt", "file_data": "VGVzdCAy", "mime_type": "text/plain"},
 		},
 	}
 

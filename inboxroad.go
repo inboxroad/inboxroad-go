@@ -1,5 +1,11 @@
 package inboxroad
 
+type (
+	StringMap      = map[string]string //nolint:nolintlint,gofumpt
+	SliceStringMap = []StringMap
+	StringAnyMap   = map[string]interface{}
+)
+
 type InboxroadInterface interface {
 	NewMessagesAPI() MessagesAPIInterface
 }

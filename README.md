@@ -67,7 +67,7 @@ fmt.Println(response.GetIsSuccess(), response.GetMessageID())
 // Send email, method 2: 
 
 // Create the message 
-message := inboxroad.NewMessageFromMap(map[string]interface{}{
+message := inboxroad.NewMessageFromMap(inboxroad.StringAnyMap{
     "fromEmail":    os.Getenv("INBOXROAD_SEND_EMAIL_FROM_EMAIL"),
     "fromName":     "Inboxroad Go Client - Test Suite",
     "toEmail":      os.Getenv("INBOXROAD_SEND_EMAIL_TO_EMAIL"),
@@ -76,7 +76,7 @@ message := inboxroad.NewMessageFromMap(map[string]interface{}{
     "subject":      "Inboxroad test",
     "text":         "This is a test sent via the Inboxroad Go Client",
     "html":         "<b>This is a test sent via the Inboxroad Go Client</b>",
-    "headers": []map[string]string{
+    "headers": inboxroad.SliceStringMap{
         {
             "key":   "X-Test1",
             "value": "Test 1",
@@ -86,7 +86,7 @@ message := inboxroad.NewMessageFromMap(map[string]interface{}{
             "value": "Test 2",
         },
     },
-    "attachments": []map[string]string{
+    "attachments": inboxroad.SliceStringMap{
         {
             "name":     "test-1.txt",
             "content":  "Test 1",

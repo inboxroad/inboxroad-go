@@ -33,7 +33,7 @@ func TestMessageHeaderCollection_ToSliceMap(t *testing.T) { //nolint:paralleltes
 
 	data := h.ToSliceMap()
 
-	result := []map[string]string{
+	result := inboxroad.SliceStringMap{
 		{"key": "X-Test1", "value": "Test 1"},
 		{"key": "X-Test2", "value": "Test 2"},
 	}
@@ -48,7 +48,7 @@ func TestMessageHeaderCollection_ToInboxroadMap(t *testing.T) { //nolint:paralle
 
 	data := h.ToInboxroadMap()
 
-	result := map[string]string{
+	result := inboxroad.StringMap{
 		"X-Test1": "Test 1",
 		"X-Test2": "Test 2",
 	}
@@ -63,7 +63,7 @@ func TestNewMessageHeaderCollection(t *testing.T) { //nolint:paralleltest
 }
 
 func TestNewMessageHeaderCollectionFromSliceMap(t *testing.T) { //nolint:paralleltest
-	h := inboxroad.NewMessageHeaderCollectionFromSliceMap([]map[string]string{
+	h := inboxroad.NewMessageHeaderCollectionFromSliceMap(inboxroad.SliceStringMap{
 		{"key": "X-Test1", "value": "Test 1"},
 		{"key": "X-Test2", "value": "Test 2"},
 	})
@@ -72,7 +72,7 @@ func TestNewMessageHeaderCollectionFromSliceMap(t *testing.T) { //nolint:paralle
 	assert.Equal(t, h.GetItems()[0].GetKey(), "X-Test1")
 	assert.Equal(t, h.GetItems()[0].GetValue(), "Test 1")
 
-	h = inboxroad.NewMessageHeaderCollectionFromSliceMap([]map[string]string{
+	h = inboxroad.NewMessageHeaderCollectionFromSliceMap(inboxroad.SliceStringMap{
 		{"_key": "X-Test1", "_value": "Test 1"},
 		{"_key": "X-Test2", "_value": "Test 2"},
 	})

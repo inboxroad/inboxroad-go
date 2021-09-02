@@ -34,7 +34,7 @@ func TestHTTPRequest_Get(t *testing.T) {
 
 	assert.NoError(t, err)
 
-	d := map[string]string{
+	d := inboxroad.StringMap{
 		"url": "",
 	}
 
@@ -60,7 +60,7 @@ func TestHTTPRequest_Post(t *testing.T) {
 
 	assert.NoError(t, err)
 
-	d := map[string]string{
+	d := inboxroad.StringMap{
 		"url": "",
 	}
 

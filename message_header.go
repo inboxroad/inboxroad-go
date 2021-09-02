@@ -5,8 +5,8 @@ type MessageHeaderInterface interface {
 	GetKey() string
 	SetValue(value string) MessageHeaderInterface
 	GetValue() string
-	ToMap() map[string]string
-	ToInboxroadMap() map[string]string
+	ToMap() StringMap
+	ToInboxroadMap() StringMap
 }
 
 type MessageHeader struct {
@@ -33,15 +33,15 @@ func (m MessageHeader) GetValue() string {
 	return m.value
 }
 
-func (m MessageHeader) ToMap() map[string]string {
-	return map[string]string{
+func (m MessageHeader) ToMap() StringMap {
+	return StringMap{
 		"key":   m.GetKey(),
 		"value": m.GetValue(),
 	}
 }
 
-func (m MessageHeader) ToInboxroadMap() map[string]string {
-	return map[string]string{
+func (m MessageHeader) ToInboxroadMap() StringMap {
+	return StringMap{
 		m.GetKey(): m.GetValue(),
 	}
 }

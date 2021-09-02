@@ -23,8 +23,8 @@ type MessageInterface interface {
 	GetHeaders() MessageHeaderCollectionInterface
 	SetAttachments(attachments MessageAttachmentCollectionInterface) MessageInterface
 	GetAttachments() MessageAttachmentCollectionInterface
-	ToMap() map[string]interface{}
-	ToInboxroadMap() map[string]interface{}
+	ToMap() StringAnyMap
+	ToInboxroadMap() StringAnyMap
 }
 
 type Message struct {
@@ -151,8 +151,8 @@ func (m Message) GetAttachments() MessageAttachmentCollectionInterface {
 	return m.attachments
 }
 
-func (m Message) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+func (m Message) ToMap() StringAnyMap {
+	return StringAnyMap{
 		"fromEmail":    m.GetFromEmail(),
 		"fromName":     m.GetFromName(),
 		"toEmail":      m.GetToEmail(),
@@ -166,8 +166,8 @@ func (m Message) ToMap() map[string]interface{} {
 	}
 }
 
-func (m Message) ToInboxroadMap() map[string]interface{} {
-	return map[string]interface{}{
+func (m Message) ToInboxroadMap() StringAnyMap {
+	return StringAnyMap{
 		"from_email":     m.GetFromEmail(),
 		"from_name":      m.GetFromName(),
 		"to_email":       m.GetToEmail(),
@@ -188,7 +188,7 @@ func NewMessage() MessageInterface {
 	}
 }
 
-func NewMessageFromMap(params map[string]interface{}) MessageInterface {
+func NewMessageFromMap(params StringAnyMap) MessageInterface {
 	message := NewMessage()
 
 	stringData := map[string]func(value string){
@@ -208,14 +208,14 @@ func NewMessageFromMap(params map[string]interface{}) MessageInterface {
 		}
 	}
 
-	if rawHeaders, ok := params["headers"].([]map[string]string); ok {
+	if rawHeaders, ok := params["headers"].(SliceStringMap); ok {
 		headers := NewMessageHeaderCollectionFromSliceMap(rawHeaders)
 		for _, header := range headers.GetItems() {
 			message.GetHeaders().Add(header)
 		}
 	}
 
-	if rawAttachments, ok := params["attachments"].([]map[string]string); ok {
+	if rawAttachments, ok := params["attachments"].(SliceStringMap); ok {
 		attachments := NewMessageAttachmentCollectionFromSliceMap(rawAttachments)
 		for _, attachment := range attachments.GetItems() {
 			message.GetAttachments().Add(attachment)
