@@ -1,7 +1,7 @@
 package inboxroad
 
 import (
-	"fmt" //nolint:gofumpt,gci
+	"fmt" //nolint:goimports,gofumpt,gci
 	"github.com/go-resty/resty/v2"
 )
 
