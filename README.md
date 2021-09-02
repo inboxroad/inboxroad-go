@@ -17,8 +17,8 @@ package main
 // Import the package
 import (
     "fmt"
-	"github.com/inboxroad/inboxroad-go"
-	"os"
+    "github.com/inboxroad/inboxroad-go"
+    "os"
 )
 
 // Create the http client, we will need it later:
