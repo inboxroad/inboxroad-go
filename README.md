@@ -7,7 +7,7 @@ to use it in the API calls.
 
 ## Installation
 
-`go get https://github.com/inboxroad/inboxroad-go`
+`go get github.com/inboxroad/inboxroad-go`
 
 ## Usage
 
