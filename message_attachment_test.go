@@ -45,9 +45,9 @@ func TestMessageAttachment_GetMimeType(t *testing.T) { //nolint:paralleltest
 	assert.Equal(t, "text/plain", h.SetMimeType("text/plain").GetMimeType())
 }
 
-func TestMessageAttachment_ToArray(t *testing.T) { //nolint:paralleltest
+func TestMessageAttachment_ToMap(t *testing.T) { //nolint:paralleltest
 	h := inboxroad.NewMessageAttachment("file.txt", "Test", "text/plain")
-	data := h.ToArray()
+	data := h.ToMap()
 
 	type strData struct {
 		Key, Value string
@@ -68,9 +68,9 @@ func TestMessageAttachment_ToArray(t *testing.T) { //nolint:paralleltest
 	}
 }
 
-func TestMessageAttachment_ToInboxroadArray(t *testing.T) { //nolint:paralleltest
+func TestMessageAttachment_ToInboxroadMap(t *testing.T) { //nolint:paralleltest
 	h := inboxroad.NewMessageAttachment("file.txt", "Test", "text/plain")
-	data := h.ToInboxroadArray()
+	data := h.ToInboxroadMap()
 
 	type strData struct {
 		Key, Value string

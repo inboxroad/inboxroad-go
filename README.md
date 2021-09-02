@@ -67,7 +67,7 @@ fmt.Println(response.GetIsSuccess(), response.GetMessageID())
 // Send email, method 2: 
 
 // Create the message 
-message := inboxroad.NewMessageFromArray(map[string]interface{}{
+message := inboxroad.NewMessageFromMap(map[string]interface{}{
     "fromEmail":    os.Getenv("INBOXROAD_SEND_EMAIL_FROM_EMAIL"),
     "fromName":     "Inboxroad Go Client - Test Suite",
     "toEmail":      os.Getenv("INBOXROAD_SEND_EMAIL_TO_EMAIL"),

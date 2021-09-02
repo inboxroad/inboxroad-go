@@ -27,12 +27,12 @@ func TestMessageAttachmentCollection_GetItems(t *testing.T) { //nolint:parallelt
 	assert.Equal(t, items[0].GetMimeType(), "text/plain")
 }
 
-func TestMessageAttachmentCollection_ToArray(t *testing.T) { //nolint:paralleltest
+func TestMessageAttachmentCollection_ToSliceMap(t *testing.T) { //nolint:paralleltest
 	h := inboxroad.NewMessageAttachmentCollection().
 		Add(inboxroad.NewMessageAttachment("file-1.txt", "Test 1", "text/plain")).
 		Add(inboxroad.NewMessageAttachment("file-2.txt", "Test 2", "text/plain"))
 
-	data := h.ToArray()
+	data := h.ToSliceMap()
 
 	result := []map[string]string{
 		{"name": "file-1.txt", "content": "Test 1", "mimeType": "text/plain"},
@@ -42,12 +42,12 @@ func TestMessageAttachmentCollection_ToArray(t *testing.T) { //nolint:parallelte
 	assert.Equal(t, result, data)
 }
 
-func TestMessageAttachmentCollection_ToInboxroadArray(t *testing.T) { //nolint:paralleltest
+func TestMessageAttachmentCollection_ToInboxroadSliceMap(t *testing.T) { //nolint:paralleltest
 	h := inboxroad.NewMessageAttachmentCollection().
 		Add(inboxroad.NewMessageAttachment("file-1.txt", "Test 1", "text/plain")).
 		Add(inboxroad.NewMessageAttachment("file-2.txt", "Test 2", "text/plain"))
 
-	data := h.ToInboxroadArray()
+	data := h.ToInboxroadSliceMap()
 
 	result := []map[string]string{
 		{"filename": "file-1.txt", "file_data": "VGVzdCAx", "mime_type": "text/plain"},
@@ -63,8 +63,8 @@ func TestNewMessageAttachmentCollection(t *testing.T) { //nolint:paralleltest
 	assert.IsType(t, &inboxroad.MessageAttachmentCollection{}, h)
 }
 
-func TestNewMessageAttachmentCollectionFromArray(t *testing.T) { //nolint:paralleltest
-	h := inboxroad.NewMessageAttachmentCollectionFromArray([]map[string]string{
+func TestNewMessageAttachmentCollectionFromSliceMap(t *testing.T) { //nolint:paralleltest
+	h := inboxroad.NewMessageAttachmentCollectionFromSliceMap([]map[string]string{
 		{"name": "file-1.txt", "content": "Test 1", "mimeType": "text/plain"},
 		{"name": "file-2.txt", "content": "Test 2", "mimeType": "text/plain"},
 	})
@@ -74,7 +74,7 @@ func TestNewMessageAttachmentCollectionFromArray(t *testing.T) { //nolint:parall
 	assert.Equal(t, h.GetItems()[0].GetContent(), "Test 1")
 	assert.Equal(t, h.GetItems()[0].GetMimeType(), "text/plain")
 
-	h = inboxroad.NewMessageAttachmentCollectionFromArray([]map[string]string{
+	h = inboxroad.NewMessageAttachmentCollectionFromSliceMap([]map[string]string{
 		{"_key": "file-1.txt", "_value": "Test 1", "mimeType": "text/plain"},
 		{"_key": "file-2.txt", "_value": "Test 2", "mimeType": "text/plain"},
 	})

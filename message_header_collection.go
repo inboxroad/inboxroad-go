@@ -3,8 +3,8 @@ package inboxroad
 type MessageHeaderCollectionInterface interface {
 	Add(header MessageHeaderInterface) MessageHeaderCollectionInterface
 	GetItems() []MessageHeaderInterface
-	ToArray() []map[string]string
-	ToInboxroadArray() map[string]string
+	ToSliceMap() []map[string]string
+	ToInboxroadMap() map[string]string
 }
 
 type MessageHeaderCollection struct {
@@ -21,16 +21,16 @@ func (m *MessageHeaderCollection) GetItems() []MessageHeaderInterface {
 	return m.collection
 }
 
-func (m MessageHeaderCollection) ToArray() []map[string]string {
+func (m MessageHeaderCollection) ToSliceMap() []map[string]string {
 	data := make([]map[string]string, 0, len(m.GetItems()))
 	for _, header := range m.GetItems() {
-		data = append(data, header.ToArray())
+		data = append(data, header.ToMap())
 	}
 
 	return data
 }
 
-func (m MessageHeaderCollection) ToInboxroadArray() map[string]string {
+func (m MessageHeaderCollection) ToInboxroadMap() map[string]string {
 	data := map[string]string{}
 	for _, header := range m.GetItems() {
 		data[header.GetKey()] = header.GetValue()
@@ -45,7 +45,7 @@ func NewMessageHeaderCollection() MessageHeaderCollectionInterface {
 	}
 }
 
-func NewMessageHeaderCollectionFromArray(rawHeaders []map[string]string) MessageHeaderCollectionInterface {
+func NewMessageHeaderCollectionFromSliceMap(rawHeaders []map[string]string) MessageHeaderCollectionInterface {
 	headers := NewMessageHeaderCollection()
 
 	for _, h := range rawHeaders {

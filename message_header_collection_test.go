@@ -26,12 +26,12 @@ func TestMessageHeaderCollection_GetItems(t *testing.T) { //nolint:paralleltest
 	assert.Equal(t, items[0].GetValue(), "Test 1")
 }
 
-func TestMessageHeaderCollection_ToArray(t *testing.T) { //nolint:paralleltest
+func TestMessageHeaderCollection_ToSliceMap(t *testing.T) { //nolint:paralleltest
 	h := inboxroad.NewMessageHeaderCollection().
 		Add(inboxroad.NewMessageHeader("X-Test1", "Test 1")).
 		Add(inboxroad.NewMessageHeader("X-Test2", "Test 2"))
 
-	data := h.ToArray()
+	data := h.ToSliceMap()
 
 	result := []map[string]string{
 		{"key": "X-Test1", "value": "Test 1"},
@@ -41,12 +41,12 @@ func TestMessageHeaderCollection_ToArray(t *testing.T) { //nolint:paralleltest
 	assert.Equal(t, result, data)
 }
 
-func TestMessageHeaderCollection_ToInboxroadArray(t *testing.T) { //nolint:paralleltest
+func TestMessageHeaderCollection_ToInboxroadMap(t *testing.T) { //nolint:paralleltest
 	h := inboxroad.NewMessageHeaderCollection().
 		Add(inboxroad.NewMessageHeader("X-Test1", "Test 1")).
 		Add(inboxroad.NewMessageHeader("X-Test2", "Test 2"))
 
-	data := h.ToInboxroadArray()
+	data := h.ToInboxroadMap()
 
 	result := map[string]string{
 		"X-Test1": "Test 1",
@@ -62,8 +62,8 @@ func TestNewMessageHeaderCollection(t *testing.T) { //nolint:paralleltest
 	assert.IsType(t, &inboxroad.MessageHeaderCollection{}, h)
 }
 
-func TestNewMessageHeaderCollectionFromArray(t *testing.T) { //nolint:paralleltest
-	h := inboxroad.NewMessageHeaderCollectionFromArray([]map[string]string{
+func TestNewMessageHeaderCollectionFromSliceMap(t *testing.T) { //nolint:paralleltest
+	h := inboxroad.NewMessageHeaderCollectionFromSliceMap([]map[string]string{
 		{"key": "X-Test1", "value": "Test 1"},
 		{"key": "X-Test2", "value": "Test 2"},
 	})
@@ -72,7 +72,7 @@ func TestNewMessageHeaderCollectionFromArray(t *testing.T) { //nolint:parallelte
 	assert.Equal(t, h.GetItems()[0].GetKey(), "X-Test1")
 	assert.Equal(t, h.GetItems()[0].GetValue(), "Test 1")
 
-	h = inboxroad.NewMessageHeaderCollectionFromArray([]map[string]string{
+	h = inboxroad.NewMessageHeaderCollectionFromSliceMap([]map[string]string{
 		{"_key": "X-Test1", "_value": "Test 1"},
 		{"_key": "X-Test2", "_value": "Test 2"},
 	})

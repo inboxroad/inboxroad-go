@@ -29,9 +29,9 @@ func TestMessageHeader_GetValue(t *testing.T) { //nolint:paralleltest
 	assert.Equal(t, "Test", h.SetValue("Test").GetValue())
 }
 
-func TestMessageHeader_ToArray(t *testing.T) { //nolint:paralleltest
+func TestMessageHeader_ToMap(t *testing.T) { //nolint:paralleltest
 	h := inboxroad.NewMessageHeader("X-Test", "Test")
-	data := h.ToArray()
+	data := h.ToMap()
 
 	type strData struct {
 		Key, Value string
@@ -51,9 +51,9 @@ func TestMessageHeader_ToArray(t *testing.T) { //nolint:paralleltest
 	}
 }
 
-func TestMessageHeader_ToInboxroadArray(t *testing.T) { //nolint:paralleltest
+func TestMessageHeader_ToInboxroadMap(t *testing.T) { //nolint:paralleltest
 	h := inboxroad.NewMessageHeader("X-Test", "Test")
-	data := h.ToInboxroadArray()
+	data := h.ToInboxroadMap()
 
 	if val, ok := data["X-Test"]; ok {
 		assert.Equal(t, "Test", val)

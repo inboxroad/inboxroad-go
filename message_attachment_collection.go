@@ -3,8 +3,8 @@ package inboxroad
 type MessageAttachmentCollectionInterface interface {
 	Add(header MessageAttachmentInterface) MessageAttachmentCollectionInterface
 	GetItems() []MessageAttachmentInterface
-	ToArray() []map[string]string
-	ToInboxroadArray() []map[string]string
+	ToSliceMap() []map[string]string
+	ToInboxroadSliceMap() []map[string]string
 }
 
 type MessageAttachmentCollection struct {
@@ -21,19 +21,19 @@ func (m *MessageAttachmentCollection) GetItems() []MessageAttachmentInterface {
 	return m.collection
 }
 
-func (m MessageAttachmentCollection) ToArray() []map[string]string {
+func (m MessageAttachmentCollection) ToSliceMap() []map[string]string {
 	data := make([]map[string]string, 0, len(m.GetItems()))
 	for _, header := range m.GetItems() {
-		data = append(data, header.ToArray())
+		data = append(data, header.ToMap())
 	}
 
 	return data
 }
 
-func (m MessageAttachmentCollection) ToInboxroadArray() []map[string]string {
+func (m MessageAttachmentCollection) ToInboxroadSliceMap() []map[string]string {
 	data := make([]map[string]string, 0, len(m.GetItems()))
 	for _, header := range m.GetItems() {
-		data = append(data, header.ToInboxroadArray())
+		data = append(data, header.ToInboxroadMap())
 	}
 
 	return data
@@ -45,7 +45,9 @@ func NewMessageAttachmentCollection() MessageAttachmentCollectionInterface {
 	}
 }
 
-func NewMessageAttachmentCollectionFromArray(rawAttachments []map[string]string) MessageAttachmentCollectionInterface {
+func NewMessageAttachmentCollectionFromSliceMap(
+	rawAttachments []map[string]string,
+) MessageAttachmentCollectionInterface {
 	attachments := NewMessageAttachmentCollection()
 
 	for _, a := range rawAttachments {

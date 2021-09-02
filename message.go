@@ -23,8 +23,8 @@ type MessageInterface interface {
 	GetHeaders() MessageHeaderCollectionInterface
 	SetAttachments(attachments MessageAttachmentCollectionInterface) MessageInterface
 	GetAttachments() MessageAttachmentCollectionInterface
-	ToArray() map[string]interface{}
-	ToInboxroadArray() map[string]interface{}
+	ToMap() map[string]interface{}
+	ToInboxroadMap() map[string]interface{}
 }
 
 type Message struct {
@@ -151,7 +151,7 @@ func (m Message) GetAttachments() MessageAttachmentCollectionInterface {
 	return m.attachments
 }
 
-func (m Message) ToArray() map[string]interface{} {
+func (m Message) ToMap() map[string]interface{} {
 	return map[string]interface{}{
 		"fromEmail":    m.GetFromEmail(),
 		"fromName":     m.GetFromName(),
@@ -161,12 +161,12 @@ func (m Message) ToArray() map[string]interface{} {
 		"subject":      m.GetSubject(),
 		"text":         m.GetText(),
 		"html":         m.GetHTML(),
-		"headers":      m.GetHeaders().ToArray(),
-		"attachments":  m.GetAttachments().ToArray(),
+		"headers":      m.GetHeaders().ToSliceMap(),
+		"attachments":  m.GetAttachments().ToSliceMap(),
 	}
 }
 
-func (m Message) ToInboxroadArray() map[string]interface{} {
+func (m Message) ToInboxroadMap() map[string]interface{} {
 	return map[string]interface{}{
 		"from_email":     m.GetFromEmail(),
 		"from_name":      m.GetFromName(),
@@ -176,8 +176,8 @@ func (m Message) ToInboxroadArray() map[string]interface{} {
 		"subject":        m.GetSubject(),
 		"text":           m.GetText(),
 		"html":           m.GetHTML(),
-		"headers":        m.GetHeaders().ToInboxroadArray(),
-		"attachments":    m.GetAttachments().ToInboxroadArray(),
+		"headers":        m.GetHeaders().ToInboxroadMap(),
+		"attachments":    m.GetAttachments().ToInboxroadSliceMap(),
 	}
 }
 
@@ -188,7 +188,7 @@ func NewMessage() MessageInterface {
 	}
 }
 
-func NewMessageFromArray(params map[string]interface{}) MessageInterface {
+func NewMessageFromMap(params map[string]interface{}) MessageInterface {
 	message := NewMessage()
 
 	stringData := map[string]func(value string){
@@ -209,14 +209,14 @@ func NewMessageFromArray(params map[string]interface{}) MessageInterface {
 	}
 
 	if rawHeaders, ok := params["headers"].([]map[string]string); ok {
-		headers := NewMessageHeaderCollectionFromArray(rawHeaders)
+		headers := NewMessageHeaderCollectionFromSliceMap(rawHeaders)
 		for _, header := range headers.GetItems() {
 			message.GetHeaders().Add(header)
 		}
 	}
 
 	if rawAttachments, ok := params["attachments"].([]map[string]string); ok {
-		attachments := NewMessageAttachmentCollectionFromArray(rawAttachments)
+		attachments := NewMessageAttachmentCollectionFromSliceMap(rawAttachments)
 		for _, attachment := range attachments.GetItems() {
 			message.GetAttachments().Add(attachment)
 		}

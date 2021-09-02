@@ -131,7 +131,7 @@ func TestMessage_GetAttachments(t *testing.T) { //nolint:paralleltest
 	assert.Equal(t, h, m.SetAttachments(h).GetAttachments())
 }
 
-func TestMessage_ToArray(t *testing.T) { //nolint:paralleltest
+func TestMessage_ToMap(t *testing.T) { //nolint:paralleltest
 	message := inboxroad.NewMessage().
 		SetFromEmail("from@example.com").
 		SetFromName("Sender").
@@ -152,7 +152,7 @@ func TestMessage_ToArray(t *testing.T) { //nolint:paralleltest
 				Add(inboxroad.NewMessageAttachment("file-2.txt", "Test 2", "text/plain")),
 		)
 
-	data := message.ToArray()
+	data := message.ToMap()
 	result := map[string]interface{}{
 		"fromEmail":    "from@example.com",
 		"fromName":     "Sender",
@@ -175,7 +175,7 @@ func TestMessage_ToArray(t *testing.T) { //nolint:paralleltest
 	assert.Equal(t, data, result)
 }
 
-func TestMessage_ToInboxroadArray(t *testing.T) { //nolint:paralleltest
+func TestMessage_ToInboxroadMap(t *testing.T) { //nolint:paralleltest
 	message := inboxroad.NewMessage().
 		SetFromEmail("from@example.com").
 		SetFromName("Sender").
@@ -196,7 +196,7 @@ func TestMessage_ToInboxroadArray(t *testing.T) { //nolint:paralleltest
 				Add(inboxroad.NewMessageAttachment("file-2.txt", "Test 2", "text/plain")),
 		)
 
-	data := message.ToInboxroadArray()
+	data := message.ToInboxroadMap()
 
 	result := map[string]interface{}{
 		"from_email":     "from@example.com",

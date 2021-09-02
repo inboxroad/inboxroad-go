@@ -14,7 +14,7 @@ type MessagesAPI struct {
 }
 
 func (m *MessagesAPI) Send(message MessageInterface) (MessagesAPISendResponseInterface, error) {
-	jsonBody, err := json.Marshal(message.ToInboxroadArray())
+	jsonBody, err := json.Marshal(message.ToInboxroadMap())
 	if err != nil {
 		return nil, fmt.Errorf("invalid message object: %w", err)
 	}
