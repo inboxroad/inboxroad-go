@@ -1,7 +1,7 @@
 package inboxroad_test
 
 import ( //nolint:nolintlint,goimports,gofumpt,gci
-	"errors" //nolint:gofumpt
+	"errors" //nolint:goimports,gofumpt
 	"github.com/inboxroad/inboxroad-go"
 	"github.com/stretchr/testify/assert"
 	"testing" //nolint:nolintlint,goimports,gofumpt,gci
