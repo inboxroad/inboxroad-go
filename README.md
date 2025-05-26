@@ -2,7 +2,7 @@
 
 ## Getting Started
 You will need an [inboxroad account](https://www.inboxroad.com) to get started.  
-Once you get an account, you will need to [get your api key](https://www.inboxroad.com/)
+Once you get an account, you will need to [get your api key]([https://www.inboxroad.com/](https://app.inboxroad.com/settings/connect-api))
 to use it in the API calls.
 
 ## Installation
